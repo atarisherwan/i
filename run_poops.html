@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ATARI SHERWAN | GoldHEN</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.hero{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding:0 24px 7vh;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.02),
+            rgba(0,0,0,.18)
+        ),
+        url("atari_sherwan.png")
+        center center / cover no-repeat;
+}
+
+#status{
+    min-width:360px;
+    padding:20px 52px;
+
+    border:2px solid #ffd21a;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(43,32,3,.94),
+            rgba(3,3,3,.97)
+        );
+
+    color:#fff;
+    text-align:center;
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+
+    box-shadow:
+        0 0 13px #ffcf00,
+        0 0 38px rgba(255,190,0,.62),
+        inset 0 0 22px rgba(255,190,0,.14);
+
+    text-shadow:
+        0 0 10px rgba(255,210,0,.65);
+}
+
+#state,
+#out{
+    position:absolute;
+    left:-99999px;
+    top:-99999px;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+}
+
+@media(max-width:600px){
+    #status{
+        min-width:270px;
+        padding:16px 28px;
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="hero">
+    <div id="status">
+        LOADING GOLDHEN...
+    </div>
+</main>
+
+<div id="state"></div>
+<div id="out"></div>
+
+<script>
+try{
+    history.replaceState(
+        null,
+        "",
+        "/goldhen/"
+    );
+}catch(e){}
+</script>
+
+<script type="module">
+import "./chain_poops.js";
+</script>
+
+</body>
+</html>

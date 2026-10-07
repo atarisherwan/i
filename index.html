@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ATARI SHERWAN | GoldHEN</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.hero{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding:0 24px 7vh;
+
+    background:
+        linear-gradient(to bottom,rgba(0,0,0,.02),rgba(0,0,0,.18)),
+        url("atari_sherwan.png") center center/cover no-repeat;
+}
+
+#start{
+    min-width:360px;
+    padding:20px 52px;
+    border:2px solid #ffd21a;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(43,32,3,.94),
+            rgba(3,3,3,.97)
+        );
+
+    color:#fff;
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+    cursor:pointer;
+
+    box-shadow:
+        0 0 13px #ffcf00,
+        0 0 38px rgba(255,190,0,.62),
+        inset 0 0 22px rgba(255,190,0,.14);
+
+    text-shadow:
+        0 0 10px rgba(255,210,0,.65);
+}
+
+#start:focus{
+    outline:2px solid #fff;
+    outline-offset:4px;
+}
+
+#start:active{
+    transform:scale(.98);
+}
+
+@media(max-width:600px){
+    #start{
+        min-width:270px;
+        padding:16px 28px;
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="hero">
+    <button id="start" type="button">
+        START GOLDHEN
+    </button>
+</main>
+
+<script>
+(function(){
+
+    var btn = document.getElementById("start");
+
+    function getFirmware(){
+
+        var m =
+            /PlayStation\s+4[\/ ](\d+)\.(\d+)/
+            .exec(navigator.userAgent);
+
+        if(!m){
+            return null;
+        }
+
+        var minor =
+            parseInt(m[2],16)
+            .toString(16);
+
+        if(minor.length < 2){
+            minor = "0" + minor;
+        }
+
+        return m[1] + "." + minor;
+    }
+
+    function getRunner(fw){
+
+        var routes = {
+
+            "11.00":"run_lapse.html",
+            "11.50":"run_lapse.html",
+
+            "12.00":"run_lapse.html",
+            "12.02":"run_lapse.html",
+
+            "12.50":"run_poops.html",
+            "12.52":"run_poops.html",
+
+            "13.00":"run_poops.html",
+
+            "13.02":"fw13x/jb.html",
+            "13.04":"fw13x/jb.html",
+            "13.50":"fw13x/jb.html",
+            "13.52":"fw13x/jb.html"
+        };
+
+        return routes[fw] || null;
+    }
+
+    function run(){
+
+        var fw = getFirmware();
+
+        if(!fw){
+            btn.textContent = "PS4 NOT DETECTED";
+            return;
+        }
+
+        var runner = getRunner(fw);
+
+        if(!runner){
+            btn.textContent = "UNSUPPORTED FW " + fw;
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "LOADING GOLDHEN...";
+
+        location.replace(
+            runner + location.search
+        );
+    }
+
+    btn.addEventListener("click",run);
+
+    btn.addEventListener("keydown",function(e){
+
+        if(
+            e.keyCode === 13 ||
+            e.keyCode === 88
+        ){
+            run();
+        }
+    });
+
+})();
+</script>
+
+</body>
+</html>
